@@ -10,6 +10,6 @@ app.use(cors({ origin: true }));
 const staticFileMiddleware = express.static('dist');
 app.use(staticFileMiddleware);
 
-app.use('/api/books', require('./api/books.js'))
+app.use('/api/foods', require('./api/foods.js'))
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))

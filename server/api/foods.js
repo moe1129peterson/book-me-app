@@ -1,9 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
-const Books = require('../models/index.js')
+const foods = require('../models/index.js')
 
-const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.sjwng.mongodb.net/books?retryWrites=true&w=majority`
+const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.sjwng.mongodb.net/foods?retryWrites=true&w=majority`
 const mongoose = require('mongoose')
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => { console.log('Connected to DB...') })
@@ -14,7 +14,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Get documents by query or get all
 router.get('/', async (req, res) => {
     try {
-        const results = await Books.find(req.query)
+        const results = await Foods.find(req.query)
         if (!results.error) {
             if (results.length > 0) {
                 res.status(200).json({
@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const results = await Books.findById(id)
+        const results = await Foods.findById(id)
         if (!results.error) {
             if (results.length > 0) {
                 res.status(200).json({
@@ -75,11 +75,11 @@ router.get('/:id', async (req, res) => {
 // Create new document
 router.post('/', async (req, res) => {
     try {
-        const book = new Books(req.body)
-        const newBook = await book.save()
+        const food = new Foods(req.body)
+        const newFood = await food.save()
         res.status(200).json({
             success: true, 
-            data: newBook
+            data: newfood
         })
     } catch (error) {
         res.status(500).json({
@@ -93,16 +93,16 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const book = await Books.findByIdAndUpdate(id, req.body, { new: true })
-        if (!book.error) {
+        const food = await Foods.findByIdAndUpdate(id, req.body, { new: true })
+        if (!food.error) {
             res.status(200).json({
                 success: true, 
-                data: book
+                data: food
             })
         } else {
             res.status(400).json({
                 success: false, 
-                data: book.error
+                data: food.error
             })
         }
     } catch (error) {
@@ -117,8 +117,8 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const book = await Books.findByIdAndRemove(id);
-        if (!book.error) {
+        const food = await Foods.findByIdAndRemove(id);
+        if (!food.error) {
             res.status(200).json({
                 success: true, 
                 data: `${id} was successfully deleted`
@@ -126,7 +126,7 @@ router.delete('/:id', async (req, res) => {
         } else {
             res.status(400).json({
                 success: false, 
-                data: book.error
+                data: food.error
             })
         }
     } catch (error) {

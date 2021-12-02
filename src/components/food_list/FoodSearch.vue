@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class='search-div'>
-            <SearchInput class='search-input' v-model="searchQuery" @keyup.enter="searchBooks(searchQuery)"/>
-            <button id="search-btn" @click="searchBooks(searchQuery)">Search</button>
+            <SearchInput class='search-input' v-model="searchQuery" @keyup.enter="searchfoods(searchQuery)"/>
+            <button id="search-btn" @click="searchfoods(searchQuery)">Search</button>
         </div>
         <ul id="search-list">
-            <li v-for="(book, index) in getMyBooks" :key="index">
-                <BookPreview :imgURL="book.imgURL" :title="book.title" :author="book.author" :myBook="book"/>
+            <li v-for="(food, index) in searchResults" :key="index">
+                <foodPreview :imgURL="food.imgURL" :title="food.title" :author="food.author" :myfood="myfoods.find(e => e.title === food.title && e.author === food.author && e.imgURL === food.imgURL)"/>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
 
 <script>
 import SearchInput from '../utilities/SearchInput.vue'
-import BookPreview from '../book_list/BookPreview.vue'
+import FoodPreview from '../food_list/FoodPreview.vue'
 export default {
     data() {
         return {
@@ -23,14 +23,21 @@ export default {
     },
     components: {
         SearchInput,
-        BookPreview
+        FoodPreview
     }, 
     methods: {
-
+        searchfoods(value) {
+            this.$store.dispatch('searchfoods', {
+                query: value
+            })
+        }
     }, 
     computed: {
-        getMyBooks() {
-            return this.$store.state.myBooks
+        searchResults() {
+            return this.$store.state.searchResults
+        }, 
+        myfoods() {
+            return this.$store.state.myfoods
         }
     }
 }

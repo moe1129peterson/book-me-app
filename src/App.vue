@@ -7,7 +7,7 @@ export default {
   methods: {
     async fetchMyBooks() {
       let response = await this.$store.dispatch('crudAction', {
-        route: 'books', 
+        route: 'foods', 
         method: 'GET'
       })
       this.$store.commit('updateMyBooks', response)

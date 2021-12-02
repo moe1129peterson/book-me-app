@@ -26,9 +26,9 @@ export default {
                     path: '/'
                 }, 
                 {
-                    name: 'MyBooks', 
-                    text: 'My Books', 
-                    path: '/mybooks'
+                    name: 'MyFoods', 
+                    text: 'My Foods', 
+                    path: '/myfoods'
                 }
             ]
         }

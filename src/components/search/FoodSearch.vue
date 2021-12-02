@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class='search-div'>
-            <SearchInput class='search-input' v-model="searchQuery" @keyup.enter="searchBooks(searchQuery)"/>
-            <button id="search-btn" @click="searchBooks(searchQuery)">Search</button>
+            <SearchInput class='search-input' v-model="searchQuery" @keyup.enter="searchFoods(searchQuery)"/>
+            <button id="search-btn" @click="searchFoods(searchQuery)">Search</button>
         </div>
         <ul id="search-list">
-            <li v-for="(book, index) in searchResults" :key="index">
-                <BookPreview :coverUrl="book.coverUrl" :title="book.title" :author="book.author"/>
+            <li v-for="(food, index) in searchResults" :key="index">
+                <FoodPreview :coverUrl="food.coverUrl" :title="food.title" :author="food.author"/>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
 
 <script>
 import SearchInput from '../utilities/SearchInput.vue'
-import BookPreview from '../search/BookPreview.vue'
+import FoodPreview from '../search/FoodPreview.vue'
 export default {
     data() {
         return {
@@ -23,11 +23,11 @@ export default {
     },
     components: {
         SearchInput,
-        BookPreview
+        FoodPreview
     }, 
     methods: {
-        searchBooks(value) {
-            this.$store.dispatch('searchBooks', {
+        searchFoods(value) {
+            this.$store.dispatch('searchfoods', {
                 query: value
             })
         }

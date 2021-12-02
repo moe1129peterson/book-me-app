@@ -1,18 +1,18 @@
 <template>
     <div id='previewCard'>
         <div class='coverImg'>
-            <img v-if="coverUrl" class="book-cover" :src="`https://covers.openlibrary.org/b/isbn/${coverUrl}-M.jpg`" />
+            <img v-if="coverUrl" class="food-cover" :src="`https://covers.openlibrary.org/b/isbn/${coverUrl}-M.jpg`" />
         </div>
-        <div class='bookInfo'>
+        <div class='foodInfo'>
             <h2>{{ title }}</h2>
             <h4>{{ author }}</h4>
         </div>
         <div class="action-btns">
             <button @click="toggleReadLater({ title: title, author: author, imgURL: coverUrl})">
-                <i class="far fa-bookmark"></i>
+                <i class="far fa-foodmark"></i>
             </button>
             <button @click="toggleHaveRead({ title: title, author: author, imgURL: coverUrl})">
-                <i class="fas fa-book-open"></i>
+                <i class="fas fa-food-open"></i>
             </button>
         </div>
     </div>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    name: 'Book Preview', 
+    name: 'Food Preview', 
     props: {
         coverUrl: { type: String }, 
         title: { type: String }, 
@@ -29,45 +29,45 @@ export default {
     },
     methods: {
         async toggleReadLater(query) {
-            let book = await this.checkDBForExisting(query);
-            if (book) {
-                this.updateBook(book._id, {
-                    readLater: !book.readLater
+            let food = await this.checkDBForExisting(query);
+            if (food) {
+                this.updatefood(food._id, {
+                    readLater: !food.readLater
                 })
             } else {
-                this.addNewBook(query);
+                this.addNewfood(query);
             }
         },
         async toggleHaveRead(query) {
-            let book = await this.checkDBForExisting(query);
-            if (book) {
-                this.updateBook(book._id, {
-                    haveRead: !book.haveRead
+            let food = await this.checkDBForExisting(query);
+            if (food) {
+                this.updatefood(food._id, {
+                    haveRead: !food.haveRead
                 })
             } else {
-                this.addNewBook(query);
+                this.addNewfood(query);
             }
         }, 
         async checkDBForExisting(query) {
-            return this.$store.getters.getBook(query);
+            return this.$store.getters.getfood(query);
         }, 
-        async addNewBook(body) {
+        async addNewfood(body) {
             let response = await this.$store.dispatch('crudAction', {
-                route: 'books', 
+                route: 'foods', 
                 method: 'POST', 
                 body: body
             })
-            this.$store.commit('addToMyBooks', response);
+            this.$store.commit('addToMyfoods', response);
         }, 
-        async updateBook(id, body) {
+        async updatefood(id, body) {
             let response = await this.$store.dispatch('crudAction', {
-                route: 'books', 
+                route: 'foods', 
                 method: 'PUT', 
                 id: id, 
                 body: body
             })
             console.log(response)
-            this.$store.commit('updateMyBooks', response);
+            this.$store.commit('updateMyfoods', response);
         }
     }
 }
@@ -99,12 +99,12 @@ export default {
         align-items: center;
     }
 
-    .bookInfo {
+    .foodInfo {
         width: 100%;
         padding: 32px;
     }
 
-    .book-cover {
+    .food-cover {
         height: 100%;
     }
 
